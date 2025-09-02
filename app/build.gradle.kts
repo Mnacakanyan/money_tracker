@@ -62,6 +62,10 @@ dependencies {
     implementation (libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.compiler)
 
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:1.1.7")
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -4,14 +4,21 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.money.tracker.ui.MainViewModel
 import com.money.tracker.ui.navigation.Screen
 import com.money.tracker.ui.screens.CurrencySelectionScreen
 import com.money.tracker.ui.screens.GreetingScreen
@@ -22,35 +29,63 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val mainViewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         enableEdgeToEdge()
         setContent {
-            currentComposer
             MoneyTrackerTheme {
                 val navController = rememberNavController()
+                val greetingCompleted by mainViewModel.greetingCompleted.collectAsState()
+
+                val startDestination = if (greetingCompleted) {
+                    Screen.Main.route
+                } else {
+                    Screen.Greeting.route
+                }
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NavHost(
+                    AppNavigationHost(
                         navController = navController,
-                        startDestination = Screen.Greeting.route,
-                        modifier = Modifier.padding(innerPadding)
-                    ) {
-                        composable(Screen.Greeting.route) {
-                            GreetingScreen(navController = navController)
-                        }
-                        composable(Screen.NameInput.route) {
-                            NameInputScreen(navController = navController)
-                        }
-                        composable(Screen.CurrencySelection.route) {
-                            CurrencySelectionScreen(navController = navController)
-                        }
-                        composable(Screen.Main.route) {
-                            MainScreen(navController = navController)
-                        }
-                    }
+                        startDestination = startDestination,
+                        modifier = Modifier.padding(innerPadding),
+                        mainViewModel = mainViewModel
+                    )
                 }
             }
         }
+    }
+}
 
+@Composable
+fun AppNavigationHost(
+    navController: NavHostController,
+    startDestination: String,
+    modifier: Modifier = Modifier,
+    mainViewModel: MainViewModel
+) {
+    NavHost(
+        navController = navController,
+        startDestination = startDestination,
+        modifier = modifier
+    ) {
+        composable(Screen.Greeting.route) {
+            GreetingScreen(
+                navController = navController,
+                onGreetingComplete = { mainViewModel.setGreetingCompleted(true) }
+            )
+        }
+        composable(Screen.NameInput.route) {
+            NameInputScreen(navController = navController)
+        }
+        composable(Screen.CurrencySelection.route) {
+            CurrencySelectionScreen(navController = navController)
+        }
+        composable(Screen.Main.route) {
+            MainScreen(navController = navController)
+        }
     }
 }

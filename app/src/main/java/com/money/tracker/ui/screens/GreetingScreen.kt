@@ -17,7 +17,10 @@ import com.money.tracker.ui.navigation.Screen
 import com.money.tracker.ui.theme.MoneyTrackerTheme
 
 @Composable
-fun GreetingScreen(navController: NavController) {
+fun GreetingScreen(
+    navController: NavController,
+    onGreetingComplete: () -> Unit // Added callback
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -26,7 +29,10 @@ fun GreetingScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text("Welcome to Money Tracker!")
-        Button(onClick = { navController.navigate(Screen.NameInput.route) }) {
+        Button(onClick = {
+            onGreetingComplete() // Call the callback
+            navController.navigate(Screen.NameInput.route)
+        }) {
             Text("Next")
         }
     }
@@ -36,6 +42,9 @@ fun GreetingScreen(navController: NavController) {
 @Composable
 fun GreetingScreenPreview() {
     MoneyTrackerTheme {
-        GreetingScreen(rememberNavController())
+        GreetingScreen(
+            navController = rememberNavController(),
+            onGreetingComplete = {} // Provide a no-op for preview
+        )
     }
 }

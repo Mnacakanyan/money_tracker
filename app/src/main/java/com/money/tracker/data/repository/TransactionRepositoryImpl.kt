@@ -20,25 +20,24 @@ class TransactionRepositoryImpl @Inject constructor(
         return transactionDao.getAllTransactions()
     }
 
-    // You can add more methods here as needed, for example:
+
     // fun getTransactionsByDateRange(startDate: Long, endDate: Long): Flow<List<Transaction>> {
     //     return transactionDao.getTransactionsByDateRange(startDate, endDate)
     // }
 
-    // fun getDailySummary(date: Long): Flow<List<Transaction>> { // Or a custom summary object
-    //     // Logic to calculate daily summary based on transactions for the given date
-    //     // This might involve querying transactions for a specific day and then processing them.
+    // fun getDailySummary(date: Long): Flow<List<Transaction>> {
+
     // }
 
-    // fun getWeeklySummary(startDate: Long, endDate: Long): Flow<List<Transaction>> { // Or a custom summary object
-    //     // Logic for weekly summary
+    // fun getWeeklySummary(startDate: Long, endDate: Long): Flow<List<Transaction>> {
+
     // }
 
-    // fun getMonthlySummary(month: Int, year: Int): Flow<List<Transaction>> { // Or a custom summary object
-    //     // Logic for monthly summary
+    // fun getMonthlySummary(month: Int, year: Int): Flow<List<Transaction>> {
+
     // }
 
-    // fun getYearlySummary(year: Int): Flow<List<Transaction>> { // Or a custom summary object
-    //     // Logic for yearly summary
+    // fun getYearlySummary(year: Int): Flow<List<Transaction>> {
+
     // }
 }

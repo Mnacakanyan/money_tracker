@@ -9,11 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -31,32 +32,46 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val mainViewModel: MainViewModel by viewModels()
+    private var isLoadingGreetingStatus by mutableStateOf(true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-        installSplashScreen()
+
+        splashScreen.setKeepOnScreenCondition {
+            isLoadingGreetingStatus
+        }
+
         enableEdgeToEdge()
         setContent {
             MoneyTrackerTheme {
                 val navController = rememberNavController()
-                val greetingCompleted by mainViewModel.greetingCompleted.collectAsState()
+                val greetingCompleted by mainViewModel.greetingCompleted.collectAsStateWithLifecycle()
 
-                val startDestination = if (greetingCompleted) {
-                    Screen.Main.route
-                } else {
-                    Screen.Greeting.route
+                greetingCompleted?.let {
+                    isLoadingGreetingStatus = false
                 }
 
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    AppNavigationHost(
-                        navController = navController,
-                        startDestination = startDestination,
-                        modifier = Modifier.padding(innerPadding),
-                        mainViewModel = mainViewModel
-                    )
+
+                if (!isLoadingGreetingStatus) {
+                    val startDestination = if (greetingCompleted == true) {
+                        Screen.Main.route
+                    } else {
+                        Screen.Greeting.route
+                    }
+
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                        AppNavigationHost(
+                            navController = navController,
+                            startDestination = startDestination,
+                            modifier = Modifier.padding(innerPadding),
+                            mainViewModel = mainViewModel
+                        )
+                    }
                 }
             }
         }
+
     }
 }
 

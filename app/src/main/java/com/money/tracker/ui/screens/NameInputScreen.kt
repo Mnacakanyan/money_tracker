@@ -55,10 +55,3 @@ fun NameInputScreen(navController: NavController) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun NameInputScreenPreview() {
-    MoneyTrackerTheme {
-        NameInputScreen(rememberNavController())
-    }
-}

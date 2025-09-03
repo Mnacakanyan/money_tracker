@@ -24,14 +24,6 @@ fun MainScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text("Welcome to the Main Screen!")
-        // Your main app content will go here
-    }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun MainScreenPreview() {
-    MoneyTrackerTheme {
-        MainScreen(rememberNavController())
     }
 }

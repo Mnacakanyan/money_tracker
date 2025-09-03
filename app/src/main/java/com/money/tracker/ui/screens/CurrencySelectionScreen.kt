@@ -26,7 +26,7 @@ fun CurrencySelectionScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text("Choose your preferred currency:")
-        // Placeholder for currency list/selection
+
         Text("List of currencies will be here")
         Button(onClick = {
             navController.navigate(Screen.Main.route) {
@@ -40,10 +40,3 @@ fun CurrencySelectionScreen(navController: NavController) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun CurrencySelectionScreenPreview() {
-    MoneyTrackerTheme {
-        CurrencySelectionScreen(rememberNavController())
-    }
-}

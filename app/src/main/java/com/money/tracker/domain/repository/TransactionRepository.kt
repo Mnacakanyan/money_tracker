@@ -9,8 +9,6 @@ interface TransactionRepository {
 
     fun getAllTransactions(): Flow<List<Transaction>>
 
-    // Define methods for daily, weekly, monthly, yearly results here
-    // For example:
     // fun getDailySummary(date: Long): Flow<YourSummaryDataClass>
     // fun getWeeklySummary(startDate: Long, endDate: Long): Flow<YourSummaryDataClass>
     // fun getMonthlySummary(month: Int, year: Int): Flow<YourSummaryDataClass>

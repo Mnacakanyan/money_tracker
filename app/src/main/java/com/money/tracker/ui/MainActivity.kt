@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
                     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                         AppNavigationHost(
                             navController = navController,
-                            startDestination = startDestination,
+                            startDestination = Screen.CurrencySelection.route,
                             modifier = Modifier.padding(innerPadding),
                             mainViewModel = mainViewModel
                         )

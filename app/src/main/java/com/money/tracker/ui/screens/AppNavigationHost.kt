@@ -30,10 +30,16 @@ fun AppNavigationHost(
             NameInputScreen(navController = navController)
         }
         composable(Screen.CurrencySelection.route) {
-            CurrencySelectionScreen(navController = navController)
+            OnboardingSetCurrency(
+                navController = navController,
+                preselectedCurrency = Currency.getDefault(),
+                onSetCurrency = {}
+            )
         }
         composable(Screen.Main.route) {
             MainScreen(navController = navController)
         }
+
+
     }
 }

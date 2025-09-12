@@ -209,7 +209,7 @@ private fun SelectedCurrencyCard(
             .clip(RoundedCornerShape(12.dp))
             .background(
                 brush = Brush.horizontalGradient(
-                    colors = if (preselected) listOf(
+                    colors = if (!preselected) listOf(
                         Color(0xFF6B4DFF),
                         Color(0xFFAA99FF)
                     ) else listOf(Color(0xFF14CC9E), Color(0xFF49F2C8))
@@ -337,7 +337,12 @@ private fun CurrencyItemCard(
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .background(
-                color = if (selected) Color.Magenta else Color.LightGray,
+                brush = Brush.horizontalGradient(
+                    if (selected) listOf(
+                        Color(0xFF6B4DFF),
+                        Color(0xFFAA99FF)
+                    ) else listOf(Color.LightGray, Color.LightGray)
+                ),
                 shape = RoundedCornerShape(16.dp)
             )
             .clickable { onClick() }

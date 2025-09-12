@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -26,7 +27,6 @@ fun OnboardingButton(
     modifier: Modifier = Modifier,
     text: String,
     textColor: Color,
-    backgroundColor: Color,
     @DrawableRes iconStartRes: Int? = null,
     hasNext: Boolean = false,
     enabled: Boolean = true,
@@ -36,7 +36,7 @@ fun OnboardingButton(
         modifier = modifier
             .clip(RoundedCornerShape(50.dp))
             .background(
-                color = if (enabled) backgroundColor else Color.DarkGray,
+                brush = Brush.horizontalGradient(listOf(Color(0xFF6B4DFF), Color(0xFFAA99FF))),
                 shape = RoundedCornerShape(50.dp)
             )
             .clickable(onClick = onClick, enabled = enabled),

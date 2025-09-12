@@ -25,7 +25,7 @@ fun GradientCutBottom(
             .fillMaxWidth()
             .height(height)
             .then(if (zIndex != null) Modifier.zIndex(zIndex) else Modifier)
-            .background(Brush.verticalGradient(listOf(Color.Transparent, Color.LightGray)))
+            .background(Brush.verticalGradient(listOf(Color.Transparent, Color.White.copy(alpha = 0.8f))))
             .alpha(alpha = alpha)
     )
 }

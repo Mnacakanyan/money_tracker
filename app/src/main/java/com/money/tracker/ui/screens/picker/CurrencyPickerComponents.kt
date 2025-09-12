@@ -210,9 +210,9 @@ private fun SelectedCurrencyCard(
             .background(
                 brush = Brush.horizontalGradient(
                     colors = if (preselected) listOf(
-                        Color.Green,
-                        Color.Cyan
-                    ) else listOf(Color.Blue, Color.Magenta)
+                        Color(0xFF6B4DFF),
+                        Color(0xFFAA99FF)
+                    ) else listOf(Color(0xFF14CC9E), Color(0xFF49F2C8))
                 ),
                 shape = RoundedCornerShape(12.dp)
             )

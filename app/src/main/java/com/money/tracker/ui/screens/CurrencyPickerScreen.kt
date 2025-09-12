@@ -83,7 +83,6 @@ fun OnboardingSetCurrency(
                 .padding(bottom = 20.dp),
             text = "Set",
             textColor = Color.White,
-            backgroundColor = Color.Blue,
             hasNext = true,
             enabled = true
         ) {

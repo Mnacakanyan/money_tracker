@@ -5,7 +5,14 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -19,7 +26,11 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,7 +42,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -48,8 +58,6 @@ private data class LetterDivider(
     val letter: String
 )
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
-@Suppress("ParameterNaming")
 @Composable
 fun CurrencyPicker(
     modifier: Modifier = Modifier,
@@ -60,7 +68,6 @@ fun CurrencyPicker(
     onKeyboardShown: (keyboardVisible: Boolean) -> Unit = {},
     onSelectedCurrencyChanged: (Currency) -> Unit
 ) {
-    val localView = LocalView.current
     var keyboardShownState by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -115,7 +122,6 @@ fun CurrencyPicker(
     }
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
 private fun SearchInput(
     searchTextFieldValue: TextFieldValue,
@@ -203,7 +209,10 @@ private fun SelectedCurrencyCard(
             .clip(RoundedCornerShape(12.dp))
             .background(
                 brush = Brush.horizontalGradient(
-                    colors = if (preselected) listOf(Color.Green, Color.Cyan) else listOf(Color.Blue, Color.Magenta)
+                    colors = if (preselected) listOf(
+                        Color.Green,
+                        Color.Cyan
+                    ) else listOf(Color.Blue, Color.Magenta)
                 ),
                 shape = RoundedCornerShape(12.dp)
             )
@@ -247,7 +256,6 @@ private fun SelectedCurrencyCard(
 }
 
 @Composable
-@Suppress("ParameterNaming")
 private fun CurrencyList(
     searchQueryLowercase: String,
     selectedCurrency: Currency,
@@ -266,7 +274,8 @@ private fun CurrencyList(
     val currenciesWithLetters = mutableListOf<Any>()
     var lastFirstLetter: String? = null
     for (currencyItem in currencies) {
-        val firstLetter = if (currencyItem.isCrypto) "Crypto" else currencyItem.code.first().toString()
+        val firstLetter =
+            if (currencyItem.isCrypto) "Crypto" else currencyItem.code.first().toString()
         if (firstLetter != lastFirstLetter) {
             currenciesWithLetters.add(
                 LetterDivider(
@@ -298,6 +307,7 @@ private fun CurrencyList(
                         onCurrencySelected(item)
                     }
                 }
+
                 is LetterDivider -> {
                     LetterDividerItem(
                         spacerTop = if (index == 0) 12.dp else 32.dp,
